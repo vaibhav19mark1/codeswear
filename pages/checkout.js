@@ -147,11 +147,13 @@ const Checkout = ({ cart, subTotal, addToCart, removeFromCart }) => {
           </div>
         </div>
         <div className="mx-8">
-          {subTotal!==0 && <Link href={"/checkout"}>
-            <button className="text-white m-auto bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-600 rounded text-sm">
-              Pay ₹{subTotal}
-            </button>
-          </Link>}
+          {subTotal !== 0 && (
+            <Link href={"/checkout"}>
+              <button className="text-white m-auto bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-600 rounded text-sm">
+                Pay ₹{subTotal}
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </>
