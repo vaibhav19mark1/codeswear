@@ -47,6 +47,11 @@ const handler = async (req, res) => {
         orderId: req.body.oid,
         amount: req.body.subTotal,
         address: req.body.address,
+        city: req.body.city,
+        state: req.body.state,
+        name: req.body.name,
+        pincode: req.body.pincode,
+        phone: req.body.phone,
         products: req.body.cart
     })
     await order.save()

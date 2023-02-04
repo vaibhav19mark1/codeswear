@@ -11,7 +11,7 @@ const Hoodies = ({ products }) => {
       <Head>
         <title>Hoodies - CodesWear.com</title>
       </Head>
-      <div>
+      <div className="min-h-screen">
         <section className="text-gray-600 body-font mx-5">
           <div className="container px-5 py-24 mx-auto">
             <div className="flex flex-wrap -m-4 justify-center">

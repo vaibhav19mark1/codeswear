@@ -19,12 +19,43 @@ const Checkout = ({ cart, subTotal, addToCart, removeFromCart }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("myuser"));
-    if (user && user.token) {
-      setUser(user)
-      setEmail(user.email);
+    const myuser = JSON.parse(localStorage.getItem("myuser"));
+    if (myuser && myuser.token) {
+      setUser(myuser)
+      setEmail(myuser.email);
+      fetchData(myuser.token)
+      getPincode()
     }
   }, []);
+
+  const fetchData = async (token) => {
+    let data = { token: token };
+    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    let res = await a.json();
+    setName(res.name);
+    setAddress(res.address);
+    setPhone(res.phone);
+    setPincode(res.pincode);
+    getPincode(res.pincode)
+  };
+
+  const getPincode=async(pin)=>{
+    let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
+        let pinJson = await pins.json();
+        if (Object.keys(pinJson).includes(pin)) {
+          setCity(pinJson[pin][0]);
+          setState(pinJson[pin][1]);
+        } else {
+          setCity("");
+          setState("");
+        }
+  }
 
   const handleChange = async (e) => {
     if (e.target.name == "name") {
@@ -34,15 +65,7 @@ const Checkout = ({ cart, subTotal, addToCart, removeFromCart }) => {
     } else if (e.target.name == "pincode") {
       setPincode(e.target.value);
       if (e.target.value.length == 6) {
-        let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
-        let pinJson = await pins.json();
-        if (Object.keys(pinJson).includes(e.target.value)) {
-          setCity(pinJson[e.target.value][0]);
-          setState(pinJson[e.target.value][1]);
-        } else {
-          setCity("");
-          setState("");
-        }
+        getPincode(e.target.value)
       } else {
         setCity("");
         setState("");
@@ -91,7 +114,7 @@ const Checkout = ({ cart, subTotal, addToCart, removeFromCart }) => {
       <Head>
         <title>Checkout</title>
       </Head>
-      <div className="container m-auto">
+      <div className="container m-auto min-h-screen">
         <ToastContainer position="top-left" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
         <h1 className="font-bold text-3xl my-8 text-center">Checkout</h1>
         <div className="mx-4">

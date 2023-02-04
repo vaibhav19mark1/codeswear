@@ -72,7 +72,7 @@ const Slug = ({ buyNow, addToCart, product, variants, error }) => {
       <Head>
         <title>{product.title}</title>
       </Head>
-      <section className="text-gray-600 body-font overflow-hidden">
+      <section className="text-gray-600 body-font overflow-hidden min-h-screen">
         <ToastContainer position="bottom-center" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
         <div className="container px-5 py-12 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
